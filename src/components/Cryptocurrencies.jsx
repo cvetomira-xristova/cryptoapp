@@ -3,6 +3,8 @@ import millify from 'millify';
 import { Link } from 'react-router-dom';
 import { Card, Row, Col, Input } from 'antd';
 import { useGetCryptosQuery } from '../services/cryptoApi';
+import { SearchOutlined } from '@ant-design/icons';
+import SkeletonGrid from './SkeletonGrid';
 
 const Cryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
@@ -17,14 +19,16 @@ const Cryptocurrencies = ({ simplified }) => {
     setCryptos(filteredData);
   }, [searchTerm, data]);
 
-  if (isFetching) return 'Loading...';
-
   return (
-    <div>
+    <>
+      {isFetching && <SkeletonGrid />}
+
       {!simplified && (
         <div>
           <Input
-            placeholder="Search Cryptocurrency"
+            prefix={<SearchOutlined />}
+            placeholder={'Search cryptos...'}
+            className="max-w-xl mb-10"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
@@ -42,9 +46,9 @@ const Cryptocurrencies = ({ simplified }) => {
                 title={`${currency.rank}. ${currency.name}`}
                 extra={
                   <img
-                    className="crypto-image h-[30px]"
+                    className="h-[30px]"
                     src={currency.iconUrl}
-                    alt="crypto"
+                    alt={`${currency.name} icon`}
                   />
                 }
                 hoverable>
@@ -56,7 +60,7 @@ const Cryptocurrencies = ({ simplified }) => {
           </Col>
         ))}
       </Row>
-    </div>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[200px] bg-gradient-to-r from-teal-800 via-teal-700 to-teal-800">
+    <div className="flex flex-col items-center justify-center min-h-[200px] bg-gradient-to-bl from-teal-800 via-teal-700 to-teal-800">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-teal-50 text-center mb-8 uppercase">
           Cryptoverse
