@@ -38,7 +38,7 @@ const App = () => {
               />
               <Route
                 exact
-                path="/cryptocurrency/:coinId"
+                path="/crypto/:coinId"
                 element={<CryptoDetails />}
               />
               <Route

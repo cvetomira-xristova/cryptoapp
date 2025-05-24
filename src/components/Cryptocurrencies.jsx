@@ -40,7 +40,7 @@ const Cryptocurrencies = ({ simplified }) => {
             xs={24}
             sm={12}
             lg={6}>
-            <Link to={`/crypto/${currency.id}`}>
+            <Link to={`/crypto/${currency.uuid}`}>
               <Card
                 className="rounded-xl shadow-xl p-2"
                 title={`${currency.rank}. ${currency.name}`}

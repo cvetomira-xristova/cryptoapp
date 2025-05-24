@@ -1,6 +1,6 @@
 import React from 'react';
 import millify from 'millify';
-import { Typography, Row, Col, Statistic } from 'antd';
+import { Row, Col, Statistic } from 'antd';
 import { Link } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import Cryptocurrencies from './Cryptocurrencies';
@@ -8,7 +8,7 @@ import News from './News';
 import SkeletonGrid from './SkeletonGrid';
 
 const HomePage = () => {
-  const { data, isFetching } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(10);
   const globalStats = data?.data?.stats;
 
   const stats = [
@@ -37,7 +37,7 @@ const HomePage = () => {
                   <Statistic
                     title={stat.title}
                     value={millify(stat.value)}
-                    className="text-gray-700 bg-white p-8 rounded-xl shadow-lg hover:shadow-xl cursor-pointer"
+                    className="h-full text-gray-700 bg-white p-8 rounded-xl shadow-lg hover:shadow-xl cursor-pointer"
                   />
                 </Col>
               ))}
