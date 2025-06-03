@@ -1,10 +1,8 @@
-import React from 'react';
 import millify from 'millify';
 import { Link } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import Cryptocurrencies from './Cryptocurrencies';
 import News from './News';
-import SkeletonGrid from './SkeletonGrid';
 
 const HomePage = () => {
   const { data, isFetching } = useGetCryptosQuery(10);

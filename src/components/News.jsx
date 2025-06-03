@@ -1,4 +1,4 @@
-import { Select, Typography, Row, Col, Avatar, Card } from 'antd';
+import { Select, Row, Col, Avatar, Card } from 'antd';
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
 import noThumbnailSVG from '../images/noThumbnail.svg';
 import moment from 'moment';
@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import SkeletonGrid from './SkeletonGrid';
 
-const { Text } = Typography;
 const { Option } = Select;
 
 const News = ({ simplified = false }) => {
