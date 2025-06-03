@@ -24,7 +24,7 @@ const Navbar = () => {
       </div>
 
       <nav>
-        <ul className="flex items-center gap-6 mt-4">
+        <ul className="grid sm:flex items-center gap-6 mt-4">
           <li>
             <Link
               to="/"

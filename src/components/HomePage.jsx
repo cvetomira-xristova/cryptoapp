@@ -29,9 +29,9 @@ const HomePage = () => {
             <p className="text-2xl font-bold text-teal-900 uppercase antiliased">
               Global Crypto Stats
             </p>
-            <Row className="grid grid-cols-5">
+            <div className="grid grid-cols-1 sm:grid-cols-5">
               {stats.map((stat, index) => (
-                <Col
+                <div
                   className="p-4"
                   key={index}>
                   <Statistic
@@ -39,9 +39,9 @@ const HomePage = () => {
                     value={millify(stat.value)}
                     className="h-full text-gray-700 bg-white p-8 rounded-xl shadow-lg hover:shadow-xl cursor-pointer"
                   />
-                </Col>
+                </div>
               ))}
-            </Row>
+            </div>
           </div>
 
           <div className="flex justify-between items-center">
