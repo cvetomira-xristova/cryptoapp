@@ -1,6 +1,5 @@
 import React from 'react';
 import millify from 'millify';
-import { Row, Col, Statistic } from 'antd';
 import { Link } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import Cryptocurrencies from './Cryptocurrencies';
@@ -20,56 +19,73 @@ const HomePage = () => {
   ];
 
   return (
-    <>
-      {isFetching && <SkeletonGrid />}
+    <div className="min-h-screen bg-dark">
+      {/* TODO: Fix the skeleton to better match the grid */}
+      {/* {isFetching && <SkeletonGrid />} */}
 
       {!isFetching && (
-        <div className="grid space-y-12">
-          <div>
-            <p className="text-2xl font-bold text-teal-900 uppercase antiliased">
-              Global Crypto Stats
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-5">
-              {stats.map((stat, index) => (
-                <div
-                  className="p-4"
-                  key={index}>
-                  <Statistic
-                    title={stat.title}
-                    value={millify(stat.value)}
-                    className="h-full text-gray-700 bg-white p-8 rounded-xl shadow-lg hover:shadow-xl cursor-pointer"
-                  />
-                </div>
-              ))}
+        <main className="max-w-7xl mx-auto px-4 py-12 space-y-16">
+          {/* Hero Section */}
+          <section className="relative overflow-hidden rounded-2xl bg-dark-lighter p-8 md:p-12">
+            <div className="absolute inset-0 bg-gradient-glow opacity-10" />
+            <div className="relative z-10">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-12">
+                Master Your Crypto Portfolio
+                <span className="block mt-2 text-xl md:text-2xl text-gray-400">
+                  Real-time tracking and market analytics
+                </span>
+              </h1>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                {stats.map((stat, index) => (
+                  <div
+                    key={index}
+                    className="bg-dark-card p-6 rounded-xl border border-white/5 hover:border-primary/20 
+                             transition-all duration-300 hover:shadow-glow">
+                    <p className="text-sm text-gray-400 mb-2">{stat.title}</p>
+                    <p className="text-2xl font-bold text-white">
+                      {millify(stat.value)}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div className="flex justify-between items-center">
-            <p className="text-2xl font-bold text-teal-900 uppercase antiliased">
-              Top 10 Cryptos in the World
-            </p>
-            <Link
-              to="/cryptocurrencies"
-              className="text-teal-600 hover:text-teal-900 text-md font-bold uppercase">
-              Show More
-            </Link>
-          </div>
-          <Cryptocurrencies simplified />
+          {/* Cryptocurrencies Section */}
+          <section className="space-y-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white">
+                Top Cryptocurrencies
+              </h2>
+              <Link
+                to="/cryptocurrencies"
+                className="px-6 py-2.5 bg-dark-card text-white rounded-lg border border-white/5 
+                         hover:border-primary/20 hover:shadow-glow transition-all duration-300">
+                View All
+              </Link>
+            </div>
+            <Cryptocurrencies simplified />
+          </section>
 
-          <div className="flex justify-between items-center">
-            <p className="text-2xl font-bold text-teal-900 uppercase antiliased">
-              Latest Crypto News
-            </p>
-            <Link
-              to="/news"
-              className="text-teal-600 hover:text-teal-900 text-md font-bold uppercase">
-              Show More
-            </Link>
-          </div>
-          <News simplified />
-        </div>
+          {/* News Section */}
+          <section className="space-y-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white">
+                Latest Updates
+              </h2>
+              <Link
+                to="/news"
+                className="px-6 py-2.5 bg-dark-card text-white rounded-lg border border-white/5 
+                         hover:border-primary/20 hover:shadow-glow transition-all duration-300">
+                More News
+              </Link>
+            </div>
+            <News simplified />
+          </section>
+        </main>
       )}
-    </>
+    </div>
   );
 };
 

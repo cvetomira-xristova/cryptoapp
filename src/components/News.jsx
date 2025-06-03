@@ -6,40 +6,47 @@ import { useState } from 'react';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import SkeletonGrid from './SkeletonGrid';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 const { Option } = Select;
 
-const News = ({ simplified }) => {
-  const count = simplified ? 6 : 12;
-  const [newsCategory, setNewsCategory] = useState('Crypto currency');
+const News = ({ simplified = false }) => {
+  const count = simplified ? 6 : 20;
+  const [newsCategory, setNewsCategory] = useState('Cryptocurrency');
   const { data: cryptoList } = useGetCryptosQuery(100);
-
   const { data: cryptoNews, isFetching } = useGetCryptoNewsQuery({
     searchTerm: newsCategory,
     count,
   });
 
-  // TODO: Refactor the grid
   return (
-    <>
-      {isFetching && <SkeletonGrid />}
-      {!isFetching && (
-        <Row gutter={[24, 24]}>
-          {!simplified && (
-            <Col span={24}>
+    <div className="min-h-screen bg-dark">
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {!simplified && (
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl" />
+            <div className="relative bg-dark-card/50 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
               <Select
                 showSearch
-                className=""
-                placeholder="Select a Crypto"
+                className="w-full md:w-64"
+                placeholder="Select a cryptocurrency"
                 optionFilterProp="children"
                 onChange={(value) => setNewsCategory(value)}>
-                <Option value="Cryptocurrency"> Cryptocurrency </Option>
-                {cryptoList?.data.coins.map((coin) => (
-                  <Option value={coin.name}>{coin.name}</Option>
+                <Option value="Cryptocurrency">All Cryptocurrencies</Option>
+                {cryptoList?.data?.coins.map((coin) => (
+                  <Option
+                    key={coin.uuid}
+                    value={coin.name}>
+                    {coin.name}
+                  </Option>
                 ))}
               </Select>
-            </Col>
-          )}
+            </div>
+          </div>
+        )}
+
+        {isFetching && <SkeletonGrid />}
+
+        <Row gutter={[24, 24]}>
           {cryptoNews?.data?.map((newsItem, i) => (
             <Col
               xs={24}
@@ -48,45 +55,50 @@ const News = ({ simplified }) => {
               key={i}>
               <Card
                 hoverable
-                className="h-full">
+                className="h-full bg-dark-card border-white/5 rounded-2xl
+                         hover:bg-dark-lighter hover:border-primary/20 
+                         transition-all duration-300 hover:shadow-lg"
+                bodyStyle={{ padding: '24px' }}>
                 <a
                   href={newsItem?.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex flex-col justify-between">
-                  <Title
-                    className="h-[120px]"
-                    level={4}>
+                  className="flex flex-col h-full space-y-6">
+                  <h3 className="text-xl font-semibold text-white line-clamp-3">
                     {newsItem?.title}
-                  </Title>
+                  </h3>
 
                   <img
                     src={newsItem?.thumbnail ?? noThumbnailSVG}
-                    className="h-[200px] object-cover rounded-md"
-                    alt="news article thumbnail"
+                    className="w-full h-48 object-cover rounded-xl"
+                    alt="news"
                   />
-                  <p className=" text-gray-700 mt-4 mb-8">
-                    {newsItem.excerpt?.length > 100
-                      ? `${newsItem.excerpt.substring(0, 100)}...`
-                      : newsItem.excerpt}
+
+                  <p className="text-gray-400 line-clamp-3">
+                    {newsItem.excerpt}
                   </p>
 
-                  <div className="flex justify-between items-center ">
-                    <div>
-                      <Avatar src={newsItem?.publisher.favicon} />
-                      <Text> {newsItem?.publisher.name}</Text>
+                  <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/5">
+                    <div className="flex items-center space-x-2">
+                      <Avatar
+                        src={newsItem?.publisher.favicon}
+                        className="bg-dark-lighter"
+                      />
+                      <span className="text-sm text-gray-300">
+                        {newsItem?.publisher.name}
+                      </span>
                     </div>
-                    <Text>
-                      {moment(newsItem?.date).startOf('ss').fromNow()}
-                    </Text>
+                    <span className="text-sm text-gray-400">
+                      {moment(newsItem?.date).fromNow()}
+                    </span>
                   </div>
                 </a>
               </Card>
             </Col>
           ))}
         </Row>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 

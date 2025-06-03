@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select, Skeleton } from 'antd';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -106,100 +106,135 @@ const CryptoDetails = () => {
   ];
 
   return (
-    <>
-      {isFetchingDetails && <SkeletonGrid />}
-
-      {!isFetchingDetails && (
-        <>
-          <div className="col-span-1 w-full h-full space-y-10">
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="text-2xl font-bold text-teal-900 uppercase antiliased">
-                {cryptoDetails?.name} Statistics
-              </div>
-              <div className="text-gray-600">
-                {/* {cryptoDetails?.name} live price in US dollars. */}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-              <div className="md:col-span-1">
-                <div className="mb-6">
-                  <p className="text-xl font-semibold text-teal-800 uppercase">
-                    {cryptoDetails?.name} Value
-                  </p>
-                  <p className="text-gray-600">
-                    Overview showing the stats of {cryptoDetails?.name}
-                  </p>
-                </div>
-
-                {stats.map(({ icon, title, value }) => (
-                  <div
-                    key={title}
-                    className="flex justify-between items-center p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-4 text-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="text-teal-500">{icon}</div>
-                      <div className="text-gray-700">{title}</div>
-                    </div>
-                    <div className="font-medium">{value}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="md:col-span-1">
-                <div className="mb-6">
-                  <p className="text-xl font-semibold text-teal-800 uppercase">
-                    Other Statistics
-                  </p>
-                  <p className="text-gray-600">
-                    Overview showing the stats of all cryptocurrencies
-                  </p>
-                </div>
-
-                {genericStats.map(({ icon, title, value }) => (
-                  <div
-                    key={title}
-                    className="flex justify-between items-center p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-4 text-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="text-teal-500">{icon}</div>
-                      <div className="text-gray-700">{title}</div>
-                    </div>
-                    <div className="font-medium">{value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* // TODO: Improve the skeleton load */}
-      <>
-        <Select
-          defaultValue="7d"
-          className="w-1/4 my-6"
-          placeholder="Select time period"
-          onChange={(value) => setTimePeriod(value)}>
-          {time.map((date) => (
-            <Option key={date}>{date}</Option>
-          ))}
-        </Select>
-        {isFetchingHistory && <SkeletonGrid />}
-
-        {!isFetchingHistory && (
+    <div className="min-h-screen bg-dark">
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {isFetchingDetails ? (
           <>
-            <LineChart
-              coinHistory={coinHistory}
-              currenctPrice={millify(cryptoDetails?.price)}
-              coinName={cryptoDetails?.name}
-            />
-            <p className="text-red-700 mt-10">
-              *Note: timestamps coming from the API might not be entirely
-              accurate.
-            </p>
+            {/* TODO: Fix the skeleton to better match the grid */}
+            <SkeletonGrid />
+          </>
+        ) : (
+          <>
+            {/* Hero Section */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl" />
+              <div className="relative bg-dark-card/50 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src={cryptoDetails?.iconUrl}
+                        alt={cryptoDetails?.name}
+                        className="w-12 h-12"
+                      />
+                      <div>
+                        <h1 className="text-3xl font-bold text-white">
+                          {cryptoDetails?.name}
+                        </h1>
+                        <span className="text-gray-400">
+                          {cryptoDetails?.symbol}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-baseline space-x-4">
+                      <span className="text-4xl font-bold text-white">
+                        ${millify(cryptoDetails?.price)}
+                      </span>
+                      <span
+                        className={`text-lg ${
+                          cryptoDetails?.change > 0
+                            ? 'text-green-400'
+                            : 'text-red-400'
+                        }`}>
+                        {cryptoDetails?.change}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Chart Section */}
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Value Stats */}
+              <div className="bg-dark-card rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-semibold text-white mb-6">
+                  Market Statistics
+                </h2>
+                <div className="space-y-4">
+                  {stats.map(({ icon, title, value }) => (
+                    <div
+                      key={title}
+                      className="flex items-center justify-between p-4 bg-dark-lighter/50 
+                               rounded-xl hover:bg-dark-lighter transition-colors">
+                      <div className="flex items-center space-x-3">
+                        <span className="p-2 rounded-lg bg-primary/10 text-primary">
+                          {icon}
+                        </span>
+                        <span className="text-gray-300">{title}</span>
+                      </div>
+                      <span className="text-white font-medium">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Supply Stats */}
+              <div className="bg-dark-card rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-semibold text-white mb-6">
+                  Supply Information
+                </h2>
+                <div className="space-y-4">
+                  {genericStats.map(({ icon, title, value }) => (
+                    <div
+                      key={title}
+                      className="flex items-center justify-between p-4 bg-dark-lighter/50 
+                               rounded-xl hover:bg-dark-lighter transition-colors">
+                      <div className="flex items-center space-x-3">
+                        <span className="p-2 rounded-lg bg-primary/10 text-primary">
+                          {icon}
+                        </span>
+                        <span className="text-gray-300">{title}</span>
+                      </div>
+                      <span className="text-white font-medium">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </>
         )}
-      </>
-    </>
+
+        <div className="bg-dark-lighter rounded-xl p-6 border border-white/5">
+          {isFetchingHistory ? (
+            <Skeleton paragraph={{ rows: 17 }} />
+          ) : (
+            <>
+              <Select
+                defaultValue="7d"
+                className="w-44 mb-2 bg-dark-card"
+                onChange={(value) => setTimePeriod(value)}>
+                {time.map((date) => (
+                  <Option key={date}>{date}</Option>
+                ))}
+              </Select>
+              <LineChart
+                coinHistory={coinHistory}
+                currenctPrice={millify(cryptoDetails?.price)}
+                coinName={cryptoDetails?.name}
+              />
+              <div className="mt-8 text-center">
+                <p className="text-sm text-gray-400">
+                  Data provided by CoinRanking API. Timestamps might not be
+                  accurate.
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

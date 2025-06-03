@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark text-gray-100;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply flex items-center space-x-2 text-gray-400 hover:text-primary 
+           px-4 py-2.5 rounded-lg transition-all duration-200
+           hover:bg-dark-card hover:shadow-glow;
+  }
+}
+
+/* Custom styles for Ant Design components */
+.ant-card {
+  @apply bg-dark-card border-white/5 !important;
+}
+
+.ant-card-head-title {
+  @apply text-gray-100 !important;
+}
+
+.ant-select {
+  @apply bg-dark-lighter border-white/5 !important;
+}
+
+.ant-card-head {
+  @apply border-white/5 !important;
+}
+
+.ant-card-body {
+  @apply text-white !important;
+}
+
+/* Skeleton Dark Theme Overrides */
+.ant-skeleton-input {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.ant-skeleton-input.ant-skeleton-active {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.06) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  ) !important;
+  background-size: 400% 100% !important;
+}

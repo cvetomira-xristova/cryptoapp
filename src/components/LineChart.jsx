@@ -37,15 +37,16 @@ const LineChart = ({ coinHistory, currenctPrice, coinName }) => {
         label: 'Price in USD',
         data: coinPrice,
         fill: false,
-        backgroundColor: '#14b8a6',
-        borderColor: '#14b8a6',
+        backgroundColor: '#3B82F6',
+        borderColor: '#3B82F6',
+        borderWidth: 2,
       },
     ],
   };
 
-  // TODO: Configure more options
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       title: {
         display: true,
@@ -63,17 +64,25 @@ const LineChart = ({ coinHistory, currenctPrice, coinName }) => {
   };
 
   return (
-    <div>
-      <div className="text-2xl font-bold text-teal-900 uppercase antiliased">
-        {coinName} Price Chart
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold text-white">
+          {coinName} Price Chart
+        </h2>
+        <div className="flex items-center space-x-2">
+          <span className="text-gray-400">Current Price:</span>
+          <span className="text-xl font-semibold text-primary">
+            ${currenctPrice}
+          </span>
+        </div>
       </div>
-      <div className="text-md text-teal-900 font-bold mt-2">
-        {coinName} Current Price {currenctPrice}
+
+      <div className="h-[400px] bg-dark-card rounded-xl p-4 border border-white/5">
+        <Line
+          data={data}
+          options={options}
+        />
       </div>
-      <Line
-        data={data}
-        options={options}
-      />
     </div>
   );
 };

@@ -1,37 +1,45 @@
 import { Link } from 'react-router-dom';
+import { HomeOutlined, FundOutlined, BulbOutlined } from '@ant-design/icons';
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[200px] bg-gradient-to-bl from-teal-800 via-teal-700 to-teal-800">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-teal-50 text-center mb-8 uppercase">
-          Cryptoverse
-        </h1>
+    <footer className="bg-dark-lighter border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex flex-col items-center justify-center space-y-8">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Cryptoverse
+          </h1>
 
-        <nav className="flex flex-wrap justify-center gap-x-12 gap-y-4 uppercase">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-white hover:text-teal-900">
-            Home
-          </Link>
-          <Link
-            to="/exchanges"
-            className="flex items-center gap-2 text-white hover:text-teal-900">
-            Exchanges
-          </Link>
-          <Link
-            to="/cryptocurrencies"
-            className="flex items-center gap-2 text-white hover:text-teal-900">
-            Cryptocurrencies
-          </Link>
-          <Link
-            to="/news"
-            className="flex items-center gap-2 text-white hover:text-teal-900">
-            News
-          </Link>
-        </nav>
+          <nav className="flex flex-wrap justify-center gap-6">
+            <Link
+              to="/"
+              className="nav-link group"
+            >
+              <HomeOutlined className="text-primary group-hover:text-primary-light" />
+              <span>Home</span>
+            </Link>
+            <Link
+              to="/cryptocurrencies"
+              className="nav-link group"
+            >
+              <FundOutlined className="text-primary group-hover:text-primary-light" />
+              <span>Cryptocurrencies</span>
+            </Link>
+            <Link
+              to="/news"
+              className="nav-link group"
+            >
+              <BulbOutlined className="text-primary group-hover:text-primary-light" />
+              <span>News</span>
+            </Link>
+          </nav>
+
+          <p className="text-sm text-gray-400">
+            © {new Date().getFullYear()} Cryptoverse. All rights reserved.
+          </p>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
