@@ -6,10 +6,11 @@ A modern React application that provides real-time information about cryptocurre
 
 - 💹 Real-time cryptocurrency data and statistics
 - 📈 Detailed information for individual cryptocurrencies
+- 🔍 Search functionality for cryptocurrencies
+- ♾️ Infinite scroll for loading cryptocurrencies
 - 📊 Price history charts with multiple time periods
 - 📰 Latest crypto news with filtering capabilities
 - 📱 Responsive design for all devices
-- 🔍 Search functionality for cryptocurrencies
 
 ## 🛠️ Tech Stack
 
@@ -39,3 +40,9 @@ npm start
 
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+## Live Demo 🚀
+
+Check out the live demo at [https://tsvetomira-hristova-cryptoapp.netlify.app](https://tsvetomira-hristova-cryptoapp.netlify.app)
+
+![Cryptoverse landing interface](/public/live-demo.png)
